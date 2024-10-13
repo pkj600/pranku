@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ultimate Prank Website</title>
+  <style>
+    body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+      transition: background-color 0.5s ease;
+    }
+
+    #prankButton {
+      padding: 15px 30px;
+      font-size: 18px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    #prankButton:hover {
+      background-color: #0056b3;
+    }
+
+    /* Moving button randomly */
+    .move-button:hover {
+      position: absolute;
+      top: calc(50% - 100px + (Math.random() * 400px));
+      left: calc(50% - 100px + (Math.random() * 400px));
+    }
+
+    #prankText {
+      font-size: 22px;
+      color: #333;
+      margin: 20px 0;
+    }
+
+    /* Flashing background colors */
+    .flash {
+      animation: flashBg 0.5s infinite alternate;
+    }
+
+    @keyframes flashBg {
+      0% { background-color: #ffffff; }
+      50% { background-color: #ffcccb; }
+      100% { background-color: #ff9999; }
+    }
+
+    /* Shaking effect */
+    .shake {
+      animation: shake 0.2s infinite;
+    }
+
+    @keyframes shake {
+      0% { transform: translate(2px, 1px) rotate(0deg); }
+      10% { transform: translate(-1px, -2px) rotate(-1deg); }
+      20% { transform: translate(-3px, 0px) rotate(1deg); }
+      30% { transform: translate(1px, 2px) rotate(0deg); }
+      40% { transform: translate(1px, -1px) rotate(1deg); }
+      50% { transform: translate(-1px, 2px) rotate(-1deg); }
+      60% { transform: translate(-3px, 1px) rotate(0deg); }
+      70% { transform: translate(2px, 1px) rotate(-1deg); }
+      80% { transform: translate(-1px, -1px) rotate(1deg); }
+      90% { transform: translate(2px, 2px) rotate(0deg); }
+      100% { transform: translate(1px, -2px) rotate(-1deg); }
+    }
+
+    /* Confetti */
+    .confetti {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background-color: #ffcc00;
+      animation: fall 5s infinite;
+      top: -10px;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) rotate(0deg); }
+      100% { transform: translateY(600px) rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Prank Madness!</h1>
+  <p id="prankText">Are you fast enough to catch the button?</p>
+
+  <button id="prankButton">Click Me!</button>
+
+  <script>
+    let prankButton = document.getElementById('prankButton');
+    let prankText = document.getElementById('prankText');
+    let prankCount = 0;
+
+    // Sound effect for pranks
+    function playSound(url) {
+      let audio = new Audio(url);
+      audio.play();
+    }
+
+    // Confetti drop
+    function confettiDrop() {
+      for (let i = 0; i < 100; i++) {
+        let confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * window.innerWidth + 'px';
+        confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        document.body.appendChild(confetti);
+      }
+    }
+
+    function prankLoop() {
+      prankCount++;
+
+      if (prankCount === 1) {
+        prankText.textContent = 'Haha, too slow! Try again!';
+        prankButton.classList.add('move-button');
+        playSound('https://www.myinstants.com/media/sounds/troll-tololol_1.mp3');
+      } else if (prankCount === 2) {
+        prankText.textContent = 'Almost had it, didn’t you? 😏';
+        document.body.classList.add('flash');
+        playSound('https://www.myinstants.com/media/sounds/trolololololo_1.mp3');
+      } else if (prankCount === 3) {
+        prankText.textContent = 'Whoa! Why is the button shaking?!';
+        prankButton.classList.add('shake');
+        playSound('https://www.myinstants.com/media/sounds/sad-trombone.mp3');
+      } else if (prankCount === 4) {
+        prankText.textContent = 'Gotcha! Button is gone...wait, what?!';
+        prankButton.style.display = 'none';
+        setTimeout(() => {
+          prankButton.style.display = 'inline-block';
+        }, 3000);
+        playSound('https://www.myinstants.com/media/sounds/wilhelm-scream_2.mp3');
+      } else if (prankCount === 5) {
+        prankText.textContent = 'Yay, confetti celebration! 🎉';
+        confettiDrop();
+        setTimeout(() => { prankText.textContent = 'Oh no, you’re back at the start...'; }, 2000);
+        prankCount = 0; // Reset the prank cycle
+      }
+    }
+
+    prankButton.addEventListener('click', prankLoop);
+  </script>
+
+</body>
+</html>
